@@ -2,7 +2,7 @@
 
 \usepackage{macros}
 
-\input{title}
+\title{Lecture 0 for EE127 (Fall 2018): Optimization Models in Engineering}
 \author{Scribes: Nilesh Tripuraneni \textit{(Change This To Your Names)}}
 \date{01/01/01 \textit{(Change This to Lecture Date)}}
 \begin{document}
@@ -13,10 +13,10 @@
 \section{Scribing}
 \sectionlabel{convexity}
 
-This document provides a scribing template. Try to organize the sections/subsections for your lecture in a coherent way. Also please read the directions detailed in the \emph{instructions.pdf} file contained in the Github (\url{https://github.com/nileshtrip/EE127Notes})
+This document provides a scribing template. Try to organize the sections/subsections for your lecture in a coherent way. Also please read the directions detailed in the \emph{instructions.pdf} file contained in the Github (\url{https://github.com/nileshtrip/EE127Notes}).
 
 \subsection{What a scribe should do}
-
+What a scribe should do:
 \begin{definition}[Good Scribe]
 A good scribe should follow the scribing instructions.
 \end{definition}
@@ -26,10 +26,10 @@ We care a lot about convex functions.
 
 \begin{theorem}[The name of the theorem]
 \theoremlabel{atheorem}
-Although this class is not proof-oriented if the lectures contain any theorems put them in a theorem environment.
+Although this class is not heavily proof-oriented if the lectures contain any important/useful theorems put them in a theorem environment.
 \end{theorem}
 \begin{proof}[Proof of \theoremref{atheorem}]
-A clear, well-written proof (or reference to a proof in one of the course texts) about convexity might go here.
+An instructive proof (or reference to a proof in one of the course texts) about convexity might go here.
 \end{proof}
 
 \subsection{Examples relating to the aforementioned theorem}
@@ -55,7 +55,12 @@ An equation without a label,
 \[
 f(y) \ge f(x) + g^\trans (y-x)\,.
 \]
-
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=3in]{figures/lecture1-epigraph}
+\end{center}
+\caption{A fun figure about epigraphs completely unrelated to \propositionref{first-order-taylor}.}
+\end{figure}
 \subsection{An important characterization perhaps}
 \begin{proposition}
 \propositionlabel{first-order-taylor}
@@ -70,12 +75,6 @@ f(y) = f(x)
 A nice proof.
 \end{proof}
 
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=3in]{figures/lecture1-epigraph}
-\end{center}
-\caption{A fun figure about epigraphs completely unrelated to \propositionref{first-order-taylor}.}
-\end{figure}
 
 \section{Convex optimization}
 We care a lot about ~$f\colon\domain\to\R$ over a convex domain~$\domain:$
