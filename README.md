@@ -6,7 +6,7 @@ I will manage the uploading of each Lecture folder to the Github.
 
 ##  Individual lectures 
 
-Use the Lecture0 folder as a template for creating your notes. You should only need to modify the lecture0.tex (where 0 should be changed to the lecture you are scribing), title.tex, (and potentially the refs.bib) files.
+Use the Lecture0 folder as a template for creating your notes. You should only need to modify the lecture0.tex (where 0 should be changed to the lecture you are scribing), potentially add to the refs.bib files, and potentially add to the figures folder.
 
 ## Scribe instructions
 
