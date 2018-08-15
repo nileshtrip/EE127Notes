@@ -23,4 +23,4 @@ You will receive .5 % extra credit on your final grade for your scribing (contin
 
 ##
 
-Thanks to Max Simchowitz (and the Spring 2018 EE227C course) for the nice notes template.
+Thanks to Max Simchowitz (and the Spring 2018 EE227C course) for the nice Latex macros file.
