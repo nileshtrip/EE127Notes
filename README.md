@@ -19,7 +19,7 @@ https://docs.google.com/spreadsheets/d/1QkBNu3qSNPOalyL7tkhtas8bGw32ZAge54OpX8yE
 
 Scribing sign-ups should hopefully stabilize during the first 2 weeks of the course. After this initial sign-up, I will freeze a version of the sign-ups sheet about two weeks after the start of the course. At this point if you cannot scribe a certain lecture it is your responsibility to find a person (or group to switch with).
 
-You will receive .5 % extra credit on your final grade for your scribing (contingent on you generating good-quality notes).
+You will receive extra credit (at the discretion of the instructors) on your final grade for your scribing (contingent on you generating good-quality notes).
 
 ##
 
