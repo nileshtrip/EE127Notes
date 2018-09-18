@@ -1,0 +1,206 @@
+\documentclass[12pt]{article}
+
+\usepackage{macros}
+
+\title{Lecture 6 for EE127 (Fall 2018): SVD}
+\author{Scribes: Khalil Sarwari}
+\date{9/11/2018}
+\begin{document}
+
+
+\maketitle
+
+\section{Motivation}
+What better way is there to understand an object than to dissect it? Our object of interest is the matrix $A \in \mathbb{R}^{m \times n}$. We have already been introduced to fundamental procedure of diagonalization, which can be applied to $A$ under certain conditions. Here we set up and introduce a new procedure, singular value decomposition (SVD), which lends insight into the essence of any such matrix $A$.
+
+\section{Dyads}
+\begin{definition}
+A matrix $A \in \mathbb {R}^{m \times n}$ is called a \textit{dyad} if it can be written as 
+\begin{center}
+$A = pq^\trans$
+\end{center}
+for some vectors $p \in \mathbb{R}^{m}, q \in \mathbb{R}^{n}$
+\end{definition}
+
+\begin{example}
+The following matrix $A$ is a dyad.
+\begin{gather*}
+A = \begin{pmatrix} 1 & 2 & 3 \\ 2 & 4 & 6\end{pmatrix} =  \begin{pmatrix} 1 \\ 2 \end{pmatrix} \begin{pmatrix} 1 & 2 & 3 \end{pmatrix}
+\end{gather*}
+\end{example}
+
+One interpretation of a dyad $A$ is that the columns of $A$ are scaled versions of $p$, with the scalar factors coming from $q$. Similarly, the rows of $A$ are scaled versions of $q^\trans$, with the scalar factors coming from $p$. In short, \textit{the rows are proportional, the columns are proportional}.
+
+\begin{example}
+Consider a video that consists of two scenes that have practically no activity (i.e. abandoned mall day/night). The two series of images can then be roughly approximated by two dyads $pq^\trans$ and $rs^\trans$ , one for each scene. Each dyad will have a row vector representing the image of the scene, and the series would be various scalings of this row. The video as a whole can then be approximated by a combination of these two dyads, namely $\begin{pmatrix} p \\ 0 \end{pmatrix}q^\trans + \begin{pmatrix} 0 \\ r \end{pmatrix}s^\trans$.
+\end{example}
+
+We can make the following observations:
+\begin{itemize}
+    \item If we wish to represent a matrix as a sum of dyads, increasing the number of dyads generally helps improve the quality of the approximation.
+    \item If we wish to represent a matrix as a sum of dyads, and also reduce redundancy among the dyads, it helps to have the $p \in \mathbb{R}^{m}$ orthogonal to one another. This insight also applies to the $q \in \mathbb{R}^{n}$. Reducing redundancy in this way keeps the cost of the approximation low.
+\end{itemize}
+
+\section{Singular Value Decomposition (SVD)}
+The Singular Value Decomposition decomposes any matrix $A \in \mathbb{R}^{m \times n}$ into a product of three matrices. 
+\begin{theorem} \textbf{SVD}\\
+Any matrix $A \in \mathbb{R}^{m \times n}$ can be factorized as \begin{gather*}
+    A = U\tilde{\Sigma}V^\trans
+\end{gather*}
+where $U \in \mathbb{R}^{m \times m}$ and $V \in \mathbb{R}^{n \times n}$ are orthogonal matrices and $\tilde{\Sigma} \in \mathbb{R}^{m \times n}$ is a matrix having the first $r := rank(A)$ diagonal entries ($\sigma_1, ..., \sigma_r$) positive and decreasing in magnitude, and all other entries $0$.
+\begin{gather*}
+    \tilde{\Sigma} = \begin{pmatrix} \Sigma & 0_{r, n-r} \\ 0_{m-r, r} & 0_{m-r, n-r}\end{pmatrix}, \ \Sigma = diag(\sigma_1, ..., \sigma_r)\succ 0
+\end{gather*}
+\end{theorem}
+\noindent Compact-form SVD follows directly from this theorem.
+\begin{corollary} \textbf{Compact-form SVD} \\
+Any matrix $A \in \mathbb{R}^{m \times n}$ can expressed as
+\begin{gather*}
+    A = \sum_{i=1}^r \sigma_i u_iv_i^\trans = U_r\Sigma V_r^\trans
+\end{gather*}
+where:
+\begin{itemize}
+    \item $U_r = \begin{pmatrix} u_1 \ ... \ u_r \end{pmatrix}$ is such that $U_r^\trans U_r = I_r$ and $V_r = \begin{pmatrix} v_1 \ ... \ v_r \end{pmatrix}$ is such that $V_r^\trans V_r = I_r$
+    \item The positive numbers $\sigma_i$ are called the singular values of $A$, and are arranged such that $\sigma_1 \geq \sigma_2 \geq ... \geq \sigma_r > 0$
+    \item The vectors $u_i$ are called the left singular vectors of $A$, such that $Av_i= \sigma_iu_i$ and the vectors $v_i$ are called the right singular vectors of $A$ such that $u_i^\trans$A$= \sigma_iv_i$
+    \item $\sigma_i^2=\lambda_i(A^\trans A) =\lambda_i(AA^\trans), i= 1,...,r$ and $u_i$, $v_i$ are the eigenvectors of $A^TA$ and of $AA^T$, respectively.
+\end{itemize}
+\end{corollary}
+
+\section{Interpretations}
+\subsection*{Dyadic}
+The SVD theorem allows us to us to write any matrix as a sum of dyads:
+\begin{gather*}
+    A = \sum_{i=1}^r \sigma_i u_iv_i^\trans
+\end{gather*}
+The vectors $u_i$ are orthonormal, and so are the vectors $v_i$. Thus, we have minimal redundancy, with $\sigma_i>0$ providing the weight of the dyad $i$ in the overall summation.\\
+
+\noindent The sum of the first $k$ dyads provide the best rank $k$ approximation to the matrix $A$ (discussed further in Section $6$).
+\subsection*{Geometric}
+Each part of the SVD has a geometric interpretation. The matrices $U$ and $V^\trans$ are both rotation matrices. The matrix $\tilde{\Sigma}$ stretches input vectors (not necessarily all the same amount or same direction). This interpretation means that any linear transformation between two finite dimensional spaces can be broken down into rotation, scaling, and rotation.
+
+\section{Matrix Properties}
+From the singular value decomposition, we can observe essential matrix properties.
+
+\subsection*{Rank, Nullspace and Range}
+\begin{itemize}
+    \item The rank $r$ of $A$ is the cardinality of the nonzero singular values, that is the number of nonzero entries on the diagonal of $\tilde{\Sigma}$.
+    \item Since $r=rank(A)$, we have dim $\mathcal{N}(A)=n−r$. A basis for $\mathcal{N}(A)$ is the set of the last $n - r$ columns of $V$. Namely, we have the following
+    \begin{gather*}
+        \mathcal{N}(A) = span(\lbrace v_{r+1}, ..., v_{n}\rbrace) 
+    \end{gather*}
+    With orthogonality sending the top $r$ entries to zero and the $0$s on the diagonal in $\tilde{\Sigma}$ killing off the rest, one can confirm that these vectors constitute $\mathcal{N}(A)$.
+    \item Similarly, an orthonormal basis spanning the range of $A$ is given by the first $r$ columns of $U$. Namely, we have the following
+        \begin{gather*}
+        \mathcal{R}(A) = span(\lbrace u_{1}, ..., u_{r}\rbrace) 
+    \end{gather*}
+\end{itemize}
+\subsection*{Matrix Norms}
+Recall that the trace of a square matrix is the sum of its eigenvalues.
+Then the square of the Frobenius matrix norm of a matrix $\in \mathbb{R}^{m \times n}$ can be defined as
+\begin{gather*}
+\|A\|_F^2= trace(A^\trans A)=\sum_{i=1}^n \lambda_i(A^\trans A) =\sum_{i=1}^n \sigma_i^2
+\end{gather*}
+where $\sigma_i$ are the singular values of $A$.  Thus, the square of the Frobenius norm is simply the sum of its squared singular values.
+
+Furthermore, recall that the squared spectral matrix norm $\|A\|_2^2$ is equal to the maximum eigenvalue of $A^\trans A$. Thus, $\|A\|_2^2 = \sigma_1^2$, the square of the largest singular value. Equivalently, the spectral norm is the largest singular value of $A$. More formally, we have
+
+\begin{proof}
+\begin{gather*}
+    \|A\|_2^2 = \max_{x \not = 0} \begin{frac}{\|Ax\|}{\|x\|} \end{frac} = \max_{x \not = 0} \begin{frac}{\|U\tilde{\Sigma}V^\trans x\|}{\|x\|} \end{frac} = \max_{x \not = 0} \begin{frac}{\|\tilde{\Sigma}V^\trans x\|}{\|x\|}\end{frac} \intertext{Since orthogonal matrices do not affect the magnitude their inputs, we can drop $U$. We cannot drop the $V^\trans$ since its rotation effect may have consequences when $\tilde{\Sigma}$ is applied. However, we can instead add it into the denominator. Substituting $z=V^\transx$, we get}
+    \max_{z \not = 0} \begin{frac}{\|\tilde{\Sigma}z\|}{\|z\|}\end{frac} = \max_{z}\|\tilde{\Sigma}z\| : z^\trans z=1 = \max_{z} \sum_{i=1}^{r} \sigma_i^2z_i^2: z^\trans z=1\\
+    \intertext{rewriting this in terms of $p_i = z_i^2$s, we obtain a probabilistic perspective}
+    \max_{\textbf{1}^\trans p = 1, p \geq 0} \sum_{i=1}^{r} \sigma_i^2 p_i\\
+\end{gather*}
+Clearly, the upper bound on the optimal value is $\max_{1 \leq i \leq r} \sigma_i^2$. In fact, this can be easily obtained by setting $p_i=1$ at the index of the maximum singular value, and $0$ everywhere else.
+\end{proof}
+
+\begin{definition}
+The \textit{nuclear norm} of a matrix $A$ is denoted as follows:
+\begin{gather*}
+    \|A\|_* = \sum_{i=1}^r \sigma_i
+\end{gather*} where $r= rank(A)$. This norm appears in low-rank matrix problems.
+\end{definition}
+
+\subsection*{Condition Number}
+\begin{definition}
+The condition number of an invertible (all $\sigma_i > 0$) matrix is the ratio between the largest and smallest singular value:
+\begin{gather*}
+    \kappa(A) = \begin{frac}{\sigma_1}{\sigma_n} \end{frac}= \|A\|_2 \cdot \|A^{-1}\|_2
+\end{gather*}
+\end{definition}
+This ratio provides a quantitative measure of how close $A$ is to being singular (larger $\kappa(A)$ means closer to being singular).
+\subsection*{Matrix Pseudo-Inverses}
+\begin{definition}
+A \textit{pseudoinverse} of a matrix $A \in \mathbb{R}^{m \times n}$ is a matrix $A^\dagger$ that satisfies:
+\begin{gather*}
+    AA^\dagger A = A \\
+    A^\dagger A A^\dagger = A^\dagger\\
+    (AA^\dagger)^\trans = AA^\dagger\\
+    (A^\dagger A)^\trans = A^\dagger A
+\end{gather*}
+\end{definition}
+\begin{definition}
+The \textit{Moore-Penrose pseudoinverse} of a matrix $A \in \mathbb{R}^{m \times n}$ is:
+\begin{gather*}
+    A^\dagger= V \tilde{\Sigma}^\dagger U^\trans
+\end{gather*}
+where  
+\begin{gather*}
+    \tilde{\Sigma}^\dagger = \begin{pmatrix} \Sigma^{-1} & 0_{r, n-r} \\ 0_{m-r, r} & 0_{m-r, n-r}\end{pmatrix}, \ \Sigma^{-1} = diag(\sigma_1^{-1}, ..., \sigma_r^{-1})\succ 0
+\end{gather*}
+\end{definition}
+\subsubsection*{Special Cases}
+\begin{itemize}
+    \item If $A$ is square and nonsingular, then $A^\dagger = A^{-1}$
+    \item If $A$ is full column rank (so $r = n \leq m$), then $A^\dagger A = V_r V_r^\trans = VV\trans = I_n$. Thus, $A^\dagger$ is a left inverse of $A$, and can be written $A^\dagger = (A^\trans A)^{-1}A^\trans$
+    \item  If $A$ is full row rank (so $r = m \leq n$), then $AA^\dagger = U_r U_r^\trans = UU^\trans = I_m$. Thus, $A^\dagger$ is a right inverse of $A$, and can be written $A^\dagger = A^\trans (AA^\trans)^{-1}$
+\end{itemize}
+\subsection*{Projectors}
+\begin{itemize}
+    \item $P_{\mathcal{R}(A)}= U_rU_r^\trans$ is the matrix for an orthogonal projection onto \mathcal{R}(A).
+    \item $P_{\mathcal{R}(A)^\perp}= I_m -AA^\dagger$ is the matrix for an orthogonal projection onto $\mathcal{R}(A)^\perp$.
+     \item $P_{\mathcal{N}(A)}= I_n -A^\dagger A$ is the matrix for an orthogonal projection onto $\mathcal{N}(A)$.
+    \item $P_{\mathcal{N}(A)^\perp}= A^\dagger A$ is the matrix for an orthogonal projection onto $\mathcal{N}(A)^\perp$.
+\end{itemize}
+
+
+\section{Low Rank Matrix Approximation}
+The ratio $\eta_k = \frac{\|A_k\|_F^2}{\|A\|_F^2} = \frac{\sigma_1^2+...+ \sigma_k^2}{\sigma_1^2+...+ \sigma_r^2}$ indicates the proportion of the variance of $A$ explained by the best rank $k$ approximation of $A$.\\
+Note that
+\begin{gather*}
+    \|A - A_k\|_F^2 = \|\sum_{k+1}^r \sigma_i u_i v_i^\trans\|_F^2 = \sum_{k+1}^r \sigma_i^2
+\end{gather*}
+The approximation error $e_k$ follows directly and is defined as:
+\begin{gather*}
+  e_k =  \frac{\|A - A_k\|_F^2}{\|A\|_F^2} = \frac{\sigma_{k+1}^2+...+ \sigma_r^2}{\sigma_1^2+...+ \sigma_r^2} = 1 - \eta_k
+\end{gather*}
+\subsection*{Minimum “Distance” to Rank Deficiency}
+Consider the problem of finding $\delta A$, the smallest perturbation of a rank $n$ matrix $A$, which makes $rank(A + \delta A) = n - 1$. The optimal solution to this problem is $\delta A^* = A_{n-1} - A$, where $A_{n-1}$ is the rank $n-1$ approximation to $A$.\\
+
+\noindent In other words, $\delta A^* = \sigma_nu_nv_n^\trans$ and the "distance" is simply $\|\delta A^*\|_F = \sigma_n$
+\section{Link with PCA}
+Let $x_i \in \mathbb{R}^n,i= 1,...,m$ be data points.
+Let $\bar{x}=\frac{1}{m}\sum_{i=1}^m x_i$, such that $\bar{x}$ is the center of the data points. Our data matrix $ \tilde{X} \in \mathbb{R}^{n\times m}$ is a matrix containing the centered data points:
+\begin{gather*}
+    \tilde{X}= [ \tilde{x}_1 \ \hdots \ \tilde{x}_m], \ \text{where} \ \tilde{x}_i = x_i - \bar{x} \ ,i=1,...,m
+\end{gather*}
+
+We wish to find the direction $z \in \mathbb{R}^n$ in which the variance of the projection of the data points on the line defined by $z$ is maximized.\\
+For each $x_i$, the component along $z$ is $\alpha = \tilde{x}_i z^\trans$. The mean square variation of the data along $z$ is then
+\begin{gather*}
+    \frac{1}{m}\sum_{i=1}^n \alpha_i^2 = \frac{1}{m}\sum_{i=1}^n z^\trans x_i x_i^\trans z = \frac{1}{m} z^\trans \tilde{X} \tilde{X}^\trans z
+\end{gather*}
+Thus, we have the following optimization problem:
+\begin{gather*}
+    \max_{z \ : \ z^\trans z = 1} z^\trans (\tilde{X} \tilde{X}^\trans) z
+\end{gather*}
+We know the solution is the largest eigenvalue of $\tilde{X} \tilde{X}^\trans$.
+Applying SVD, $\tilde{X} = U_r\Sigma V_r^\trans$, we get that the largest eigenvalue of $\tilde{X} \tilde{X}^\trans = U_r\Sigma^2 U_r^\trans$ is $\sigma_1^2$, with maximum direction of variation $z = u_1$, the first column of $U_r$ corresponding to $\sigma_1^2$.
+
+Additional principal axes can be found by “removing” the first principal components, and applying the same approach again on the “deflated” data matrix.
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+\end{document}
