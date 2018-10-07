@@ -62,8 +62,8 @@ where:
 \begin{itemize}
     \item $U_r = \begin{pmatrix} u_1 \ ... \ u_r \end{pmatrix}$ is such that $U_r^\trans U_r = I_r$ and $V_r = \begin{pmatrix} v_1 \ ... \ v_r \end{pmatrix}$ is such that $V_r^\trans V_r = I_r$
     \item The positive numbers $\sigma_i$ are called the singular values of $A$, and are arranged such that $\sigma_1 \geq \sigma_2 \geq ... \geq \sigma_r > 0$
-    \item The vectors $u_i$ are called the left singular vectors of $A$, such that $Av_i= \sigma_iu_i$ and the vectors $v_i$ are called the right singular vectors of $A$ such that $u_i^\trans$A$= \sigma_iv_i$
-    \item $\sigma_i^2=\lambda_i(A^\trans A) =\lambda_i(AA^\trans), i= 1,...,r$ and $u_i$, $v_i$ are the eigenvectors of $A^TA$ and of $AA^T$, respectively.
+    \item The vectors $u_i$ are called the left singular vectors of $A$, such that $Av_i= \sigma_iu_i$ and the vectors $v_i$ are called the right singular vectors of $A$ such that $u_i^\trans$A$= \sigma_iv_i^\trans$
+    \item $\sigma_i^2=\lambda_i(AA^\trans) =\lambda_i(A^\trans A) , i= 1,...,r$ and $u_i$, $v_i$ are the normalized eigenvectors of $AA^\trans$ and of $A^\trans A$, respectively.
 \end{itemize}
 \end{corollary}
 
@@ -85,7 +85,7 @@ From the singular value decomposition, we can observe essential matrix propertie
 \subsection*{Rank, Nullspace and Range}
 \begin{itemize}
     \item The rank $r$ of $A$ is the cardinality of the nonzero singular values, that is the number of nonzero entries on the diagonal of $\tilde{\Sigma}$.
-    \item Since $r=rank(A)$, we have dim $\mathcal{N}(A)=n−r$. A basis for $\mathcal{N}(A)$ is the set of the last $n - r$ columns of $V$. Namely, we have the following
+    \item Since $r=rank(A)$, we have dim $\mathcal{N}(A)=n - r$. A basis for $\mathcal{N}(A)$ is the set of the last $n - r$ columns of $V$. Namely, we have the following
     \begin{gather*}
         \mathcal{N}(A) = span(\lbrace v_{r+1}, ..., v_{n}\rbrace) 
     \end{gather*}
@@ -107,7 +107,7 @@ Furthermore, recall that the squared spectral matrix norm $\|A\|_2^2$ is equal t
 
 \begin{proof}
 \begin{gather*}
-    \|A\|_2^2 = \max_{x \not = 0} \begin{frac}{\|Ax\|}{\|x\|} \end{frac} = \max_{x \not = 0} \begin{frac}{\|U\tilde{\Sigma}V^\trans x\|}{\|x\|} \end{frac} = \max_{x \not = 0} \begin{frac}{\|\tilde{\Sigma}V^\trans x\|}{\|x\|}\end{frac} \intertext{Since orthogonal matrices do not affect the magnitude their inputs, we can drop $U$. We cannot drop the $V^\trans$ since its rotation effect may have consequences when $\tilde{\Sigma}$ is applied. However, we can instead add it into the denominator. Substituting $z=V^\transx$, we get}
+    \|A\|_2^2 = \max_{x \not = 0} \begin{frac}{\|Ax\|}{\|x\|} \end{frac} = \max_{x \not = 0} \begin{frac}{\|U\tilde{\Sigma}V^\trans x\|}{\|x\|} \end{frac} = \max_{x \not = 0} \begin{frac}{\|\tilde{\Sigma}V^\trans x\|}{\|x\|}\end{frac} \intertext{Since orthogonal matrices do not affect the magnitude their inputs, we can drop $U$. We cannot drop the $V^\trans$ since its rotation effect may have consequences when $\tilde{\Sigma}$ is applied. However, we can instead add it into the denominator. Substituting $z=V^\trans x$, we get}
     \max_{z \not = 0} \begin{frac}{\|\tilde{\Sigma}z\|}{\|z\|}\end{frac} = \max_{z}\|\tilde{\Sigma}z\| : z^\trans z=1 = \max_{z} \sum_{i=1}^{r} \sigma_i^2z_i^2: z^\trans z=1\\
     \intertext{rewriting this in terms of $p_i = z_i^2$s, we obtain a probabilistic perspective}
     \max_{\textbf{1}^\trans p = 1, p \geq 0} \sum_{i=1}^{r} \sigma_i^2 p_i\\
@@ -153,12 +153,12 @@ where
 \subsubsection*{Special Cases}
 \begin{itemize}
     \item If $A$ is square and nonsingular, then $A^\dagger = A^{-1}$
-    \item If $A$ is full column rank (so $r = n \leq m$), then $A^\dagger A = V_r V_r^\trans = VV\trans = I_n$. Thus, $A^\dagger$ is a left inverse of $A$, and can be written $A^\dagger = (A^\trans A)^{-1}A^\trans$
+    \item If $A$ is full column rank (so $r = n \leq m$), then $A^\dagger A = V_r V_r^\trans = VV^\trans = I_n$. Thus, $A^\dagger$ is a left inverse of $A$, and can be written $A^\dagger = (A^\trans A)^{-1}A^\trans$
     \item  If $A$ is full row rank (so $r = m \leq n$), then $AA^\dagger = U_r U_r^\trans = UU^\trans = I_m$. Thus, $A^\dagger$ is a right inverse of $A$, and can be written $A^\dagger = A^\trans (AA^\trans)^{-1}$
 \end{itemize}
 \subsection*{Projectors}
 \begin{itemize}
-    \item $P_{\mathcal{R}(A)}= U_rU_r^\trans$ is the matrix for an orthogonal projection onto \mathcal{R}(A).
+    \item $P_{\mathcal{R}(A)}= U_rU_r^\trans$ is the matrix for an orthogonal projection onto $\mathcal{R}(A)$.
     \item $P_{\mathcal{R}(A)^\perp}= I_m -AA^\dagger$ is the matrix for an orthogonal projection onto $\mathcal{R}(A)^\perp$.
      \item $P_{\mathcal{N}(A)}= I_n -A^\dagger A$ is the matrix for an orthogonal projection onto $\mathcal{N}(A)$.
     \item $P_{\mathcal{N}(A)^\perp}= A^\dagger A$ is the matrix for an orthogonal projection onto $\mathcal{N}(A)^\perp$.
